@@ -28,6 +28,7 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
     const {theme} = useStore()
     const backgroundColor = useThemeColor({light: undefined, dark: undefined}, 'background');
     const color = useThemeColor({light: undefined, dark: undefined}, 'text');
+
     async function handleSubmit(
         values: {
             name: string;
@@ -103,21 +104,23 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
     }
 
 
-
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{flex: 1}}>
             <Portal>
                 <Dialog dismissable={false} visible={isOpen}
-                        onDismiss={() => setIsOpen(false)} style={{
+                        onDismiss={() => {
+                            setIsOpen(false)
+
+                        }} style={{
                     backgroundColor
                 }}>
                     <Dialog.Title style={{
                         textAlign: "center",
                         color
                     }}>
-                        Request Free Scrap Metal Quote!
+                        Send us feedback
                     </Dialog.Title>
 
                     <ThemedScrollView style={{
@@ -149,7 +152,8 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                       handleSubmit,
                                       isSubmitting,
                                       values,
-                                      touched
+                                      touched,
+                                      resetForm
                                   }) => (
                                     <ThemedView style={styles.form}>
                                         <TextInput
@@ -160,13 +164,13 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                             contentStyle={{
                                                 color
                                             }}
-                                            left={
+                                            /*left={
                                                 <TextInput.Icon
                                                     icon={"card-account-details-outline"}
                                                     color={theme === "light" ? "#000" : "#fff"}
                                                     style={{marginTop: 10}}
                                                 />
-                                            }
+                                            }*/
                                             style={[styles.input, {backgroundColor}]}
                                             onChangeText={handleChange('name')}
                                             onBlur={handleBlur('name')}
@@ -189,13 +193,13 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                             contentStyle={{
                                                 color
                                             }}
-                                            left={
+                                            /*left={
                                                 <TextInput.Icon
                                                     icon={"email-outline"}
                                                     color={theme === "light" ? "#000" : "#fff"}
                                                     style={{marginTop: 10}}
                                                 />
-                                            }
+                                            }*/
                                             style={[styles.input, {backgroundColor}]}
                                             onChangeText={handleChange('email')}
                                             onBlur={handleBlur('email')}
@@ -221,13 +225,13 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                             contentStyle={{
                                                 color
                                             }}
-                                            left={
+                                            /*left={
                                                 <TextInput.Icon
                                                     icon={"phone"}
                                                     color={theme === "light" ? "#000" : "#fff"}
                                                     style={{marginTop: 10}}
                                                 />
-                                            }
+                                            }*/
                                             style={[styles.input, {backgroundColor}]}
                                             onBlur={handleBlur('phoneNumber')}
                                             error={touched.phoneNumber && errors.phoneNumber !== undefined}
@@ -252,14 +256,15 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                             onChangeText={handleChange('message')}
                                             contentStyle={{
                                                 color,
+                                                height: 152
                                             }}
-                                            left={
+                                            /*left={
                                                 <TextInput.Icon
                                                     icon={"information"}
                                                     color={theme === "light" ? "#000" : "#fff"}
                                                     style={{marginTop: 10}}
                                                 />
-                                            }
+                                            }*/
                                             style={[styles.input, {backgroundColor}]}
                                             onBlur={handleBlur('message')}
                                             error={touched.message && errors.message !== undefined}
@@ -281,6 +286,7 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                             <Button mode={"contained"} disabled={isSubmitting} loading={isSubmitting}
                                                     onPress={() => {
                                                         setIsOpen(false)
+                                                        resetForm()
                                                     }}>Cancel</Button>
                                             <Button mode={"contained"} disabled={isSubmitting} loading={isSubmitting}
                                                     onPress={() => handleSubmit()}>{isSubmitting ? "Sending..." : "Send"}</Button>

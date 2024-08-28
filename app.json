@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Simvic",
-    "slug": "Simvic-App",
-    "version": "1.0.0",
+    "name": "Simvic | Scrap Metal",
+    "slug": "Simvic-Scrap-Metal",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "simvic",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -14,14 +14,19 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.coden4.Simvic"
+      "bundleIdentifier": "com.techys.simvic",
+      "runtimeVersion": {
+        "policy": "appVersion"
+      },
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.techys.simvic"
+      "package": "com.techys.simvic",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "bundler": "metro",
@@ -39,8 +44,11 @@
         "origin": false
       },
       "eas": {
-        "projectId": "cc6c9c0b-da8d-45d2-aa93-06c53300f0e1"
+        "projectId": "ce4669f6-92ae-4329-86bd-806dd7c7ab65"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ce4669f6-92ae-4329-86bd-806dd7c7ab65"
     }
   }
 }

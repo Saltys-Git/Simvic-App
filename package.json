@@ -1,7 +1,7 @@
 {
   "name": "simvic",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -34,6 +34,7 @@
     "lottie-react-native": "6.7.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^5.2.1",
     "react-native": "0.74.1",
     "react-native-bouncy-checkbox": "^4.0.1",
     "react-native-gesture-handler": "~2.16.1",
@@ -44,7 +45,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.10",
     "yup": "^1.4.0",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "expo-updates": "~0.25.24"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

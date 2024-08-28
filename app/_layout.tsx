@@ -70,6 +70,11 @@ export default function RootLayout() {
                                       headerTitle: "Services",
                                       headerStyle: {backgroundColor: theme === "light" ? "#e8e8e8" : "#282828"}
                                   }}/>
+                    <Stack.Screen name="getAQuote/index"
+                                  options={{
+                                      headerTitle: "Request Free Scrap Metal Quote!",
+                                      headerStyle: {backgroundColor: theme === "light" ? "#e8e8e8" : "#282828"}
+                                  }}/>
                 </Stack>
             </PaperProvider>
         </ThemeProvider>
