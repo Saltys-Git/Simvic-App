@@ -28,7 +28,7 @@ export default function HomeScreen() {
         {title:"Price List",icon: require('@/assets/lottie/prices.json'),link:"/priceList"},
         {title:"Services",icon: require('@/assets/lottie/educate.json'),link:"/services"},
         {title:"Get a Quote",icon: require('@/assets/lottie/quote.json'),link:"/getAQuote"},
-        {title:"Message Us",icon: require('@/assets/lottie/messages.json'),link:"/", onPress: ()=> setIsContactDialOpen(true)},
+        {title:"Message Us",icon: require('@/assets/lottie/messages.json'),link:"/messageUs"},
         {title:"About Us",icon: require('@/assets/lottie/about-us.json'),link:"/", onPress: ()=> setIsAboutDialOpen(true)},
         {title:"Privacy Policy",icon: require('@/assets/lottie/privacy.json'),link:"/", onPress: ()=> setIsPrivacyDialOpen(true)},
     ]

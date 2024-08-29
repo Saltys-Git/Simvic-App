@@ -1,16 +1,12 @@
-import {Button, Dialog, Portal, TextInput} from "react-native-paper";
+import {Button, Dialog, Portal} from "react-native-paper";
 import Toast from "react-native-toast-message";
-import {number, object, string} from "yup";
+import {object, string} from "yup";
 import {useThemeColor} from "@/hooks/useThemeColor";
 import {Formik, FormikHelpers} from "formik";
 import {ThemedView} from "./ThemedView";
-import {useEffect, useState} from "react";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import {FlatList, KeyboardAvoidingView, Platform, StyleSheet, Text} from 'react-native';
-import {useStore} from "@/hooks/selectedTheme";
-import {ThemedText} from "@/components/ThemedText";
+import {KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput} from 'react-native';
 import {ThemedScrollView} from "@/components/ThemedScrollView";
-import GridView from "@/components/GridView";
+import {useEffect, useState} from "react";
 
 export type ContactCompProps = {
     isOpen: boolean;
@@ -25,9 +21,24 @@ let emailSchema = object({
 });
 
 export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
-    const {theme} = useStore()
     const backgroundColor = useThemeColor({light: undefined, dark: undefined}, 'background');
     const color = useThemeColor({light: undefined, dark: undefined}, 'text');
+    const [formData, setFormData] = useState<{
+        name: string,
+        email: string,
+        phone: string,
+        message: string,
+    }>({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+    })
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    useEffect(() => {
+
+    }, []);
+
 
     async function handleSubmit(
         values: {
@@ -42,14 +53,11 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
             phoneNumber: string;
             message: string;
         }>) {
-
         const formData = new FormData();
         formData.append("name", values.name);
         formData.append("email", values.email);
         formData.append("phoneNumber", values.phoneNumber);
         formData.append("message", values.message);
-
-
         const response = await fetch("https://simvic-admin.vercel.app/api/contact", {
             method: "POST",
             body: formData,
@@ -105,9 +113,6 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
 
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{flex: 1}}>
             <Portal>
                 <Dialog dismissable={false} visible={isOpen}
                         onDismiss={() => {
@@ -120,163 +125,108 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                         textAlign: "center",
                         color
                     }}>
-                        Send us feedback
+                        Send us feedback update 5
                     </Dialog.Title>
-
-                    <ThemedScrollView style={{
-                        paddingBottom: 16,
-                        borderBottomLeftRadius: 32,
-                        borderBottomRightRadius: 32,
-                    }}>
                         <Dialog.Content style={{
+                            paddingBottom: 16,
+                            borderBottomLeftRadius: 32,
+                            borderBottomRightRadius: 32,
                             gap: 8,
                         }}>
 
-                            <Formik
-                                initialValues={{
-                                    name: "",
-                                    email: "",
-                                    phoneNumber: "",
-                                    message: "",
-                                }}
-                                validationSchema={emailSchema}
-                                onSubmit={(values, actions) => {
-                                    handleSubmit(values, actions);
-                                }}
-
-                            >
-                                {({
-                                      errors,
-                                      handleChange,
-                                      handleBlur,
-                                      handleSubmit,
-                                      isSubmitting,
-                                      values,
-                                      touched,
-                                      resetForm
-                                  }) => (
                                     <ThemedView style={styles.form}>
                                         <TextInput
-                                            label="Your Name"
-                                            outlineStyle={{borderRadius: 10}}
-                                            value={values.name}
-                                            mode="outlined"
-                                            contentStyle={{
-                                                color
+                                            placeholder="Your Name"
+                                            value={formData.name}
+                                            placeholderTextColor={color}
+                                            style={[styles.input, {backgroundColor, borderColor:color, color}]}
+                                            onChangeText={(e)=>{
+                                                setFormData((prev)=>{
+                                                    prev.name=e
+                                                    return {...prev}
+                                                })
                                             }}
-                                            /*left={
-                                                <TextInput.Icon
-                                                    icon={"card-account-details-outline"}
-                                                    color={theme === "light" ? "#000" : "#fff"}
-                                                    style={{marginTop: 10}}
-                                                />
-                                            }*/
-                                            style={[styles.input, {backgroundColor}]}
-                                            onChangeText={handleChange('name')}
-                                            onBlur={handleBlur('name')}
-                                            error={touched.name && errors.name !== undefined}
-                                            disabled={isSubmitting}
+                                            editable={!isSubmitting}
                                         />
 
-                                        {touched.name && errors.name &&
+                                        {/*{touched.name && errors.name &&
                                             <Text style={{
                                                 alignSelf: "flex-start",
                                                 marginHorizontal: 10,
                                                 color: "red"
                                             }}>{errors.name}</Text>
-                                        }
+                                        }*/}
                                         <TextInput
-                                            label="Email"
-                                            outlineStyle={{borderRadius: 10}}
-                                            value={values.email}
-                                            mode="outlined"
-                                            contentStyle={{
+                                            placeholder="Email"
+                                            value={formData.email}
+                                            placeholderTextColor={
                                                 color
+                                            }
+                                            style={[styles.input, {backgroundColor, borderColor:color, color}]}
+                                            onChangeText={(e)=>{
+                                                setFormData((prev)=>{
+                                                    prev.email = e
+                                                    return {...prev}
+                                                })
                                             }}
-                                            /*left={
-                                                <TextInput.Icon
-                                                    icon={"email-outline"}
-                                                    color={theme === "light" ? "#000" : "#fff"}
-                                                    style={{marginTop: 10}}
-                                                />
-                                            }*/
-                                            style={[styles.input, {backgroundColor}]}
-                                            onChangeText={handleChange('email')}
-                                            onBlur={handleBlur('email')}
-                                            error={touched.email && errors.email !== undefined}
-                                            disabled={isSubmitting}
+                                            editable={!isSubmitting}
                                         />
-                                        {touched.email && errors.email &&
+                                        {/*{touched.email && errors.email &&
                                             <Text style={{
                                                 alignSelf: "flex-start",
                                                 marginHorizontal: 10,
                                                 color: "red"
                                             }}>{errors.email}</Text>
-                                        }
+                                        }*/}
                                         <TextInput
-                                            label="Phone Number"
-                                            outlineStyle={{borderRadius: 10}}
-                                            value={values.phoneNumber}
-                                            mode="outlined"
+                                            placeholder="Phone Number"
+                                            value={formData.phone}
                                             enterKeyHint="next"
                                             maxLength={13}
                                             keyboardType={"numeric"}
-                                            onChangeText={handleChange('phoneNumber')}
-                                            contentStyle={{
-                                                color
+                                            onChangeText={(e)=>{
+                                                setFormData((prev)=>{
+                                                    prev.phone = e
+                                                    return {...prev}
+                                                })
                                             }}
-                                            /*left={
-                                                <TextInput.Icon
-                                                    icon={"phone"}
-                                                    color={theme === "light" ? "#000" : "#fff"}
-                                                    style={{marginTop: 10}}
-                                                />
-                                            }*/
-                                            style={[styles.input, {backgroundColor}]}
-                                            onBlur={handleBlur('phoneNumber')}
-                                            error={touched.phoneNumber && errors.phoneNumber !== undefined}
-                                            disabled={isSubmitting}
+                                            placeholderTextColor={
+                                                color
+                                            }
+                                            style={[styles.input, {backgroundColor, borderColor:color, color}]}
+                                            editable={!isSubmitting}
                                         />
-                                        {touched.phoneNumber && errors.phoneNumber &&
+                                        {/*{touched.phoneNumber && errors.phoneNumber &&
                                             <Text style={{
                                                 alignSelf: "flex-start",
                                                 marginHorizontal: 10,
                                                 color: "red"
                                             }}>{errors.phoneNumber}</Text>
-                                        }
+                                        }*/}
 
                                         <TextInput
-                                            label="Your Message"
-                                            outlineStyle={{borderRadius: 10}}
-                                            value={values.message}
-                                            mode="outlined"
+                                            placeholder="Your Message"
+                                            value={formData.message}
                                             enterKeyHint="next"
                                             multiline
                                             numberOfLines={4}
-                                            onChangeText={handleChange('message')}
-                                            contentStyle={{
-                                                color,
-                                                height: 152
+                                            onChangeText={(e)=>{
+                                                setFormData((prev)=>{
+                                                    prev.message = e
+                                                    return {...prev}
+                                                })
                                             }}
-                                            /*left={
-                                                <TextInput.Icon
-                                                    icon={"information"}
-                                                    color={theme === "light" ? "#000" : "#fff"}
-                                                    style={{marginTop: 10}}
-                                                />
-                                            }*/
-                                            style={[styles.input, {backgroundColor}]}
-                                            onBlur={handleBlur('message')}
-                                            error={touched.message && errors.message !== undefined}
-                                            disabled={isSubmitting}
+                                            placeholderTextColor={color}
+                                            style={[styles.input, {backgroundColor, borderColor:color, color, height:106, textAlignVertical:"top", paddingTop:12}]}
+                                            editable={!isSubmitting}
                                         />
-                                        {touched.message && errors.message &&
+                                        {/*{touched.message && errors.message &&
                                             <Text style={{
                                                 alignSelf: "flex-start",
                                                 marginHorizontal: 10,
                                                 color: "red"
                                             }}>{errors.message}</Text>
-                                        }
+                                        }*/}
                                         <ThemedView style={{
                                             flexDirection: "row",
                                             gap: 16,
@@ -286,20 +236,21 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                                             <Button mode={"contained"} disabled={isSubmitting} loading={isSubmitting}
                                                     onPress={() => {
                                                         setIsOpen(false)
-                                                        resetForm()
+                                                        setFormData({
+                                                            name:"",
+                                                            email:"",
+                                                            phone:"",
+                                                            message:""
+                                                        })
                                                     }}>Cancel</Button>
                                             <Button mode={"contained"} disabled={isSubmitting} loading={isSubmitting}
-                                                    onPress={() => handleSubmit()}>{isSubmitting ? "Sending..." : "Send"}</Button>
+                                                    onPress={() => console.log("pressed")}>{isSubmitting ? "Sending..." : "Send"}</Button>
                                         </ThemedView>
                                     </ThemedView>
-                                )}
-                            </Formik>
                         </Dialog.Content>
-                    </ThemedScrollView>
                 </Dialog>
                 <Toast/>
             </Portal>
-        </KeyboardAvoidingView>
     )
 
 }
@@ -323,6 +274,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 60,
         backgroundColor: '#ffffff',
+        padding: 8,
         justifyContent: 'center',
+        borderRadius: 12,
+        borderWidth: 1,
+        borderStyle:"solid",
     },
 });
