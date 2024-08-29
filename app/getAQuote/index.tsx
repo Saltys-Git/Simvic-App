@@ -166,8 +166,8 @@ const PriceList = () => {
             <ThemedView style={styles.stepContainer}>
                 <ThemedText style={{
                     width: "100%",
-                    alignItems: "center",
                     textAlign: "center",
+                    alignItems: "center",
                 }} type="subtitle">We will contact you soon with the quote</ThemedText>
                 <Formik
                     initialValues={{

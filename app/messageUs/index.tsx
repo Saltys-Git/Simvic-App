@@ -117,8 +117,8 @@ export default function ContactComp() {
         <ThemedView style={styles.form}>
             <ThemedText style={{
                 width: "100%",
-                alignItems: "center",
                 textAlign: "center",
+                alignItems: "center",
             }} type="subtitle">Update 6</ThemedText>
             <TextInput
                 placeholder="Your Name"

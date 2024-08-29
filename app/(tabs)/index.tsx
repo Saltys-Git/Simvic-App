@@ -60,8 +60,8 @@ export default function HomeScreen() {
                                             source={item.icon}
                                             style={{
                                                 aspectRatio: "1.4/1",
-                                                width: "100%",
                                                 alignSelf: "center",
+                                                width: "100%",
                                             }}/>
                                         <ThemedText type="subtitle">{item.title}</ThemedText>
                                     </ThemedSurface>

@@ -122,8 +122,8 @@ export function ContactComp({isOpen, setIsOpen}: ContactCompProps) {
                     backgroundColor
                 }}>
                     <Dialog.Title style={{
-                        textAlign: "center",
-                        color
+                        color,
+                        textAlign: "center"
                     }}>
                         Send us feedback update 5
                     </Dialog.Title>
